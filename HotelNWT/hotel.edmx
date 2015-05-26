@@ -1,0 +1,621 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="hotelModel.Store" Alias="Self" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.6" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="hotelModelStoreContainer">
+          <EntitySet Name="food_menu" EntityType="hotelModel.Store.food_menu" store:Type="Tables" Schema="hotel" />
+          <EntitySet Name="food_order" EntityType="hotelModel.Store.food_order" store:Type="Tables" Schema="hotel" />
+          <EntitySet Name="image" EntityType="hotelModel.Store.image" store:Type="Tables" Schema="hotel" />
+          <EntitySet Name="keycard" EntityType="hotelModel.Store.keycard" store:Type="Tables" Schema="hotel" />
+          <EntitySet Name="location" EntityType="hotelModel.Store.location" store:Type="Tables" Schema="hotel" />
+          <EntitySet Name="reservation" EntityType="hotelModel.Store.reservation" store:Type="Tables" Schema="hotel" />
+          <EntitySet Name="resource" EntityType="hotelModel.Store.resource" store:Type="Tables" Schema="hotel" />
+          <EntitySet Name="resource_type" EntityType="hotelModel.Store.resource_type" store:Type="Tables" Schema="hotel" />
+          <EntitySet Name="user" EntityType="hotelModel.Store.user" store:Type="Tables" Schema="hotel" />
+          <AssociationSet Name="fk_food_order_food_menu1" Association="hotelModel.Store.fk_food_order_food_menu1">
+            <End Role="food_menu" EntitySet="food_menu" />
+            <End Role="food_order" EntitySet="food_order" />
+          </AssociationSet>
+          <AssociationSet Name="fk_food_order_user1" Association="hotelModel.Store.fk_food_order_user1">
+            <End Role="user" EntitySet="user" />
+            <End Role="food_order" EntitySet="food_order" />
+          </AssociationSet>
+          <AssociationSet Name="fk_image_resource_type1" Association="hotelModel.Store.fk_image_resource_type1">
+            <End Role="resource_type" EntitySet="resource_type" />
+            <End Role="image" EntitySet="image" />
+          </AssociationSet>
+          <AssociationSet Name="fk_reservation_user1" Association="hotelModel.Store.fk_reservation_user1">
+            <End Role="user" EntitySet="user" />
+            <End Role="reservation" EntitySet="reservation" />
+          </AssociationSet>
+          <AssociationSet Name="fk_resource_keycard1" Association="hotelModel.Store.fk_resource_keycard1">
+            <End Role="keycard" EntitySet="keycard" />
+            <End Role="resource" EntitySet="resource" />
+          </AssociationSet>
+          <AssociationSet Name="fk_resource_resource_type" Association="hotelModel.Store.fk_resource_resource_type">
+            <End Role="resource_type" EntitySet="resource_type" />
+            <End Role="resource" EntitySet="resource" />
+          </AssociationSet>
+          <AssociationSet Name="fk_resource_user1" Association="hotelModel.Store.fk_resource_user1">
+            <End Role="user" EntitySet="user" />
+            <End Role="resource" EntitySet="resource" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="food_menu">
+          <Key>
+            <PropertyRef Name="idfood" />
+          </Key>
+          <Property Name="idfood" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="varchar" Nullable="false" MaxLength="30" />
+          <Property Name="price" Type="float" Nullable="false" />
+          <Property Name="description" Type="varchar" MaxLength="45" />
+          <Property Name="amount_available" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="food_order">
+          <Key>
+            <PropertyRef Name="idfood_order" />
+            <PropertyRef Name="user_iduser" />
+            <PropertyRef Name="food_menu_idfood" />
+          </Key>
+          <Property Name="idfood_order" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="order_name" Type="varchar" Nullable="false" MaxLength="45" />
+          <Property Name="oder_date" Type="datetime" Nullable="false" />
+          <Property Name="amount" Type="int" Nullable="false" />
+          <Property Name="order_price" Type="float" Nullable="false" />
+          <Property Name="user_iduser" Type="int" Nullable="false" />
+          <Property Name="food_menu_idfood" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="image">
+          <Key>
+            <PropertyRef Name="idimage" />
+            <PropertyRef Name="resource_type_idresource_type" />
+          </Key>
+          <Property Name="idimage" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="varchar" Nullable="false" MaxLength="45" />
+          <Property Name="location" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="description" Type="varchar" MaxLength="45" />
+          <Property Name="resource_type_idresource_type" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="keycard">
+          <Key>
+            <PropertyRef Name="idkeycard" />
+          </Key>
+          <Property Name="idkeycard" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="number" Type="varchar" Nullable="false" MaxLength="10" />
+          <Property Name="access_identifier" Type="varchar" Nullable="false" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="location">
+          <Key>
+            <PropertyRef Name="idlocation" />
+          </Key>
+          <Property Name="idlocation" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="address" Type="varchar" Nullable="false" MaxLength="45" />
+          <Property Name="latitude" Type="float" Nullable="false" />
+          <Property Name="longitude" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="reservation">
+          <Key>
+            <PropertyRef Name="idreservation" />
+            <PropertyRef Name="user_iduser" />
+          </Key>
+          <Property Name="idreservation" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="from_date" Type="datetime" Nullable="false" />
+          <Property Name="to_date" Type="datetime" Nullable="false" />
+          <Property Name="price" Type="float" Nullable="false" />
+          <Property Name="status" Type="tinyint" Nullable="false" />
+          <Property Name="type" Type="tinyint" />
+          <Property Name="user_iduser" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="resource">
+          <Key>
+            <PropertyRef Name="idresource" />
+            <PropertyRef Name="resource_type_idresource_type" />
+            <PropertyRef Name="keycard_idkeycard" />
+            <PropertyRef Name="user_iduser" />
+          </Key>
+          <Property Name="idresource" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="varchar" Nullable="false" MaxLength="45" />
+          <Property Name="occupied" Type="binary" Nullable="false" MaxLength="1" />
+          <Property Name="available" Type="binary" Nullable="false" MaxLength="1" />
+          <Property Name="availability_status" Type="varchar" MaxLength="64" />
+          <Property Name="availability_date" Type="datetime" />
+          <Property Name="resource_type_idresource_type" Type="int" Nullable="false" />
+          <Property Name="keycard_idkeycard" Type="int" Nullable="false" />
+          <Property Name="user_iduser" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="resource_type">
+          <Key>
+            <PropertyRef Name="idresource_type" />
+          </Key>
+          <Property Name="idresource_type" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="varchar" Nullable="false" MaxLength="45" />
+          <Property Name="description" Type="varchar" Nullable="false" MaxLength="256" />
+          <Property Name="price" Type="float" Nullable="false" />
+          <Property Name="qunatity" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="iduser" />
+          </Key>
+          <Property Name="iduser" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="username" Type="varchar" Nullable="false" MaxLength="20" />
+          <Property Name="password" Type="varchar" Nullable="false" MaxLength="40" />
+          <Property Name="email" Type="varchar" Nullable="false" MaxLength="45" />
+          <Property Name="user_type" Type="tinyint" Nullable="false" />
+          <Property Name="created_date" Type="datetime" Nullable="false" />
+          <Property Name="activated_date" Type="datetime" />
+          <Property Name="deactivated_date" Type="datetime" />
+          <Property Name="confirmation_key" Type="varchar" Nullable="false" MaxLength="40" />
+        </EntityType>
+        <Association Name="fk_food_order_food_menu1">
+          <End Role="food_menu" Type="hotelModel.Store.food_menu" Multiplicity="1" />
+          <End Role="food_order" Type="hotelModel.Store.food_order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="food_menu">
+              <PropertyRef Name="idfood" />
+            </Principal>
+            <Dependent Role="food_order">
+              <PropertyRef Name="food_menu_idfood" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_food_order_user1">
+          <End Role="user" Type="hotelModel.Store.user" Multiplicity="1" />
+          <End Role="food_order" Type="hotelModel.Store.food_order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="iduser" />
+            </Principal>
+            <Dependent Role="food_order">
+              <PropertyRef Name="user_iduser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_image_resource_type1">
+          <End Role="resource_type" Type="hotelModel.Store.resource_type" Multiplicity="1" />
+          <End Role="image" Type="hotelModel.Store.image" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="resource_type">
+              <PropertyRef Name="idresource_type" />
+            </Principal>
+            <Dependent Role="image">
+              <PropertyRef Name="resource_type_idresource_type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_reservation_user1">
+          <End Role="user" Type="hotelModel.Store.user" Multiplicity="1" />
+          <End Role="reservation" Type="hotelModel.Store.reservation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="iduser" />
+            </Principal>
+            <Dependent Role="reservation">
+              <PropertyRef Name="user_iduser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_resource_keycard1">
+          <End Role="keycard" Type="hotelModel.Store.keycard" Multiplicity="1" />
+          <End Role="resource" Type="hotelModel.Store.resource" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="keycard">
+              <PropertyRef Name="idkeycard" />
+            </Principal>
+            <Dependent Role="resource">
+              <PropertyRef Name="keycard_idkeycard" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_resource_resource_type">
+          <End Role="resource_type" Type="hotelModel.Store.resource_type" Multiplicity="1" />
+          <End Role="resource" Type="hotelModel.Store.resource" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="resource_type">
+              <PropertyRef Name="idresource_type" />
+            </Principal>
+            <Dependent Role="resource">
+              <PropertyRef Name="resource_type_idresource_type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_resource_user1">
+          <End Role="user" Type="hotelModel.Store.user" Multiplicity="1" />
+          <End Role="resource" Type="hotelModel.Store.resource" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="iduser" />
+            </Principal>
+            <Dependent Role="resource">
+              <PropertyRef Name="user_iduser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="hotelModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="hotelEntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="food_menu" EntityType="hotelModel.food_menu" />
+          <EntitySet Name="food_order" EntityType="hotelModel.food_order" />
+          <EntitySet Name="image" EntityType="hotelModel.image" />
+          <EntitySet Name="keycard" EntityType="hotelModel.keycard" />
+          <EntitySet Name="location" EntityType="hotelModel.location" />
+          <EntitySet Name="reservation" EntityType="hotelModel.reservation" />
+          <EntitySet Name="resource" EntityType="hotelModel.resource" />
+          <EntitySet Name="resource_type" EntityType="hotelModel.resource_type" />
+          <EntitySet Name="user" EntityType="hotelModel.user" />
+          <AssociationSet Name="fk_food_order_food_menu1" Association="hotelModel.fk_food_order_food_menu1">
+            <End Role="food_menu" EntitySet="food_menu" />
+            <End Role="food_order" EntitySet="food_order" />
+          </AssociationSet>
+          <AssociationSet Name="fk_food_order_user1" Association="hotelModel.fk_food_order_user1">
+            <End Role="user" EntitySet="user" />
+            <End Role="food_order" EntitySet="food_order" />
+          </AssociationSet>
+          <AssociationSet Name="fk_image_resource_type1" Association="hotelModel.fk_image_resource_type1">
+            <End Role="resource_type" EntitySet="resource_type" />
+            <End Role="image" EntitySet="image" />
+          </AssociationSet>
+          <AssociationSet Name="fk_resource_keycard1" Association="hotelModel.fk_resource_keycard1">
+            <End Role="keycard" EntitySet="keycard" />
+            <End Role="resource" EntitySet="resource" />
+          </AssociationSet>
+          <AssociationSet Name="fk_reservation_user1" Association="hotelModel.fk_reservation_user1">
+            <End Role="user" EntitySet="user" />
+            <End Role="reservation" EntitySet="reservation" />
+          </AssociationSet>
+          <AssociationSet Name="fk_resource_resource_type" Association="hotelModel.fk_resource_resource_type">
+            <End Role="resource_type" EntitySet="resource_type" />
+            <End Role="resource" EntitySet="resource" />
+          </AssociationSet>
+          <AssociationSet Name="fk_resource_user1" Association="hotelModel.fk_resource_user1">
+            <End Role="user" EntitySet="user" />
+            <End Role="resource" EntitySet="resource" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="food_menu">
+          <Key>
+            <PropertyRef Name="idfood" />
+          </Key>
+          <Property Name="idfood" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="30" Unicode="false" FixedLength="false" />
+          <Property Name="price" Type="Single" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="45" Unicode="false" FixedLength="false" />
+          <Property Name="amount_available" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="food_order" Relationship="hotelModel.fk_food_order_food_menu1" FromRole="food_menu" ToRole="food_order" />
+        </EntityType>
+        <EntityType Name="food_order">
+          <Key>
+            <PropertyRef Name="idfood_order" />
+            <PropertyRef Name="user_iduser" />
+            <PropertyRef Name="food_menu_idfood" />
+          </Key>
+          <Property Name="idfood_order" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="order_name" Type="String" Nullable="false" MaxLength="45" Unicode="false" FixedLength="false" />
+          <Property Name="oder_date" Type="DateTime" Nullable="false" />
+          <Property Name="amount" Type="Int32" Nullable="false" />
+          <Property Name="order_price" Type="Single" Nullable="false" />
+          <Property Name="user_iduser" Type="Int32" Nullable="false" />
+          <Property Name="food_menu_idfood" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="food_menu" Relationship="hotelModel.fk_food_order_food_menu1" FromRole="food_order" ToRole="food_menu" />
+          <NavigationProperty Name="user" Relationship="hotelModel.fk_food_order_user1" FromRole="food_order" ToRole="user" />
+        </EntityType>
+        <EntityType Name="image">
+          <Key>
+            <PropertyRef Name="idimage" />
+            <PropertyRef Name="resource_type_idresource_type" />
+          </Key>
+          <Property Name="idimage" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="45" Unicode="false" FixedLength="false" />
+          <Property Name="location" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="description" Type="String" MaxLength="45" Unicode="false" FixedLength="false" />
+          <Property Name="resource_type_idresource_type" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="resource_type" Relationship="hotelModel.fk_image_resource_type1" FromRole="image" ToRole="resource_type" />
+        </EntityType>
+        <EntityType Name="keycard">
+          <Key>
+            <PropertyRef Name="idkeycard" />
+          </Key>
+          <Property Name="idkeycard" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="number" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
+          <Property Name="access_identifier" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="resource" Relationship="hotelModel.fk_resource_keycard1" FromRole="keycard" ToRole="resource" />
+        </EntityType>
+        <EntityType Name="location">
+          <Key>
+            <PropertyRef Name="idlocation" />
+          </Key>
+          <Property Name="idlocation" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="address" Type="String" Nullable="false" MaxLength="45" Unicode="false" FixedLength="false" />
+          <Property Name="latitude" Type="Single" Nullable="false" />
+          <Property Name="longitude" Type="Single" Nullable="false" />
+        </EntityType>
+        <EntityType Name="reservation">
+          <Key>
+            <PropertyRef Name="idreservation" />
+            <PropertyRef Name="user_iduser" />
+          </Key>
+          <Property Name="idreservation" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="from_date" Type="DateTime" Nullable="false" />
+          <Property Name="to_date" Type="DateTime" Nullable="false" />
+          <Property Name="price" Type="Single" Nullable="false" />
+          <Property Name="status" Type="SByte" Nullable="false" />
+          <Property Name="type" Type="SByte" />
+          <Property Name="user_iduser" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="user" Relationship="hotelModel.fk_reservation_user1" FromRole="reservation" ToRole="user" />
+        </EntityType>
+        <EntityType Name="resource">
+          <Key>
+            <PropertyRef Name="idresource" />
+            <PropertyRef Name="resource_type_idresource_type" />
+            <PropertyRef Name="keycard_idkeycard" />
+            <PropertyRef Name="user_iduser" />
+          </Key>
+          <Property Name="idresource" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="45" Unicode="false" FixedLength="false" />
+          <Property Name="occupied" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+          <Property Name="available" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+          <Property Name="availability_status" Type="String" MaxLength="64" Unicode="false" FixedLength="false" />
+          <Property Name="availability_date" Type="DateTime" />
+          <Property Name="resource_type_idresource_type" Type="Int32" Nullable="false" />
+          <Property Name="keycard_idkeycard" Type="Int32" Nullable="false" />
+          <Property Name="user_iduser" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="keycard" Relationship="hotelModel.fk_resource_keycard1" FromRole="resource" ToRole="keycard" />
+          <NavigationProperty Name="resource_type" Relationship="hotelModel.fk_resource_resource_type" FromRole="resource" ToRole="resource_type" />
+          <NavigationProperty Name="user" Relationship="hotelModel.fk_resource_user1" FromRole="resource" ToRole="user" />
+        </EntityType>
+        <EntityType Name="resource_type">
+          <Key>
+            <PropertyRef Name="idresource_type" />
+          </Key>
+          <Property Name="idresource_type" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="45" Unicode="false" FixedLength="false" />
+          <Property Name="description" Type="String" Nullable="false" MaxLength="256" Unicode="false" FixedLength="false" />
+          <Property Name="price" Type="Single" Nullable="false" />
+          <Property Name="qunatity" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="image" Relationship="hotelModel.fk_image_resource_type1" FromRole="resource_type" ToRole="image" />
+          <NavigationProperty Name="resource" Relationship="hotelModel.fk_resource_resource_type" FromRole="resource_type" ToRole="resource" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="iduser" />
+          </Key>
+          <Property Name="iduser" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="username" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="password" Type="String" Nullable="false" MaxLength="40" Unicode="false" FixedLength="false" />
+          <Property Name="email" Type="String" Nullable="false" MaxLength="45" Unicode="false" FixedLength="false" />
+          <Property Name="user_type" Type="SByte" Nullable="false" />
+          <Property Name="created_date" Type="DateTime" Nullable="false" />
+          <Property Name="activated_date" Type="DateTime" />
+          <Property Name="deactivated_date" Type="DateTime" />
+          <Property Name="confirmation_key" Type="String" Nullable="false" MaxLength="40" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="food_order" Relationship="hotelModel.fk_food_order_user1" FromRole="user" ToRole="food_order" />
+          <NavigationProperty Name="reservation" Relationship="hotelModel.fk_reservation_user1" FromRole="user" ToRole="reservation" />
+          <NavigationProperty Name="resource" Relationship="hotelModel.fk_resource_user1" FromRole="user" ToRole="resource" />
+        </EntityType>
+        <Association Name="fk_food_order_food_menu1">
+          <End Role="food_menu" Type="hotelModel.food_menu" Multiplicity="1" />
+          <End Role="food_order" Type="hotelModel.food_order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="food_menu">
+              <PropertyRef Name="idfood" />
+            </Principal>
+            <Dependent Role="food_order">
+              <PropertyRef Name="food_menu_idfood" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_food_order_user1">
+          <End Role="user" Type="hotelModel.user" Multiplicity="1" />
+          <End Role="food_order" Type="hotelModel.food_order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="iduser" />
+            </Principal>
+            <Dependent Role="food_order">
+              <PropertyRef Name="user_iduser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_image_resource_type1">
+          <End Role="resource_type" Type="hotelModel.resource_type" Multiplicity="1" />
+          <End Role="image" Type="hotelModel.image" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="resource_type">
+              <PropertyRef Name="idresource_type" />
+            </Principal>
+            <Dependent Role="image">
+              <PropertyRef Name="resource_type_idresource_type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_resource_keycard1">
+          <End Role="keycard" Type="hotelModel.keycard" Multiplicity="1" />
+          <End Role="resource" Type="hotelModel.resource" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="keycard">
+              <PropertyRef Name="idkeycard" />
+            </Principal>
+            <Dependent Role="resource">
+              <PropertyRef Name="keycard_idkeycard" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_reservation_user1">
+          <End Role="user" Type="hotelModel.user" Multiplicity="1" />
+          <End Role="reservation" Type="hotelModel.reservation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="iduser" />
+            </Principal>
+            <Dependent Role="reservation">
+              <PropertyRef Name="user_iduser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_resource_resource_type">
+          <End Role="resource_type" Type="hotelModel.resource_type" Multiplicity="1" />
+          <End Role="resource" Type="hotelModel.resource" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="resource_type">
+              <PropertyRef Name="idresource_type" />
+            </Principal>
+            <Dependent Role="resource">
+              <PropertyRef Name="resource_type_idresource_type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_resource_user1">
+          <End Role="user" Type="hotelModel.user" Multiplicity="1" />
+          <End Role="resource" Type="hotelModel.resource" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="iduser" />
+            </Principal>
+            <Dependent Role="resource">
+              <PropertyRef Name="user_iduser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="hotelModelStoreContainer" CdmEntityContainer="hotelEntities">
+          <EntitySetMapping Name="food_menu">
+            <EntityTypeMapping TypeName="hotelModel.food_menu">
+              <MappingFragment StoreEntitySet="food_menu">
+                <ScalarProperty Name="idfood" ColumnName="idfood" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="amount_available" ColumnName="amount_available" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="food_order">
+            <EntityTypeMapping TypeName="hotelModel.food_order">
+              <MappingFragment StoreEntitySet="food_order">
+                <ScalarProperty Name="idfood_order" ColumnName="idfood_order" />
+                <ScalarProperty Name="order_name" ColumnName="order_name" />
+                <ScalarProperty Name="oder_date" ColumnName="oder_date" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="order_price" ColumnName="order_price" />
+                <ScalarProperty Name="user_iduser" ColumnName="user_iduser" />
+                <ScalarProperty Name="food_menu_idfood" ColumnName="food_menu_idfood" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="image">
+            <EntityTypeMapping TypeName="hotelModel.image">
+              <MappingFragment StoreEntitySet="image">
+                <ScalarProperty Name="idimage" ColumnName="idimage" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="location" ColumnName="location" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="resource_type_idresource_type" ColumnName="resource_type_idresource_type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="keycard">
+            <EntityTypeMapping TypeName="hotelModel.keycard">
+              <MappingFragment StoreEntitySet="keycard">
+                <ScalarProperty Name="idkeycard" ColumnName="idkeycard" />
+                <ScalarProperty Name="number" ColumnName="number" />
+                <ScalarProperty Name="access_identifier" ColumnName="access_identifier" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="location">
+            <EntityTypeMapping TypeName="hotelModel.location">
+              <MappingFragment StoreEntitySet="location">
+                <ScalarProperty Name="idlocation" ColumnName="idlocation" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="latitude" ColumnName="latitude" />
+                <ScalarProperty Name="longitude" ColumnName="longitude" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="reservation">
+            <EntityTypeMapping TypeName="hotelModel.reservation">
+              <MappingFragment StoreEntitySet="reservation">
+                <ScalarProperty Name="idreservation" ColumnName="idreservation" />
+                <ScalarProperty Name="from_date" ColumnName="from_date" />
+                <ScalarProperty Name="to_date" ColumnName="to_date" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="user_iduser" ColumnName="user_iduser" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="resource">
+            <EntityTypeMapping TypeName="hotelModel.resource">
+              <MappingFragment StoreEntitySet="resource">
+                <ScalarProperty Name="idresource" ColumnName="idresource" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="occupied" ColumnName="occupied" />
+                <ScalarProperty Name="available" ColumnName="available" />
+                <ScalarProperty Name="availability_status" ColumnName="availability_status" />
+                <ScalarProperty Name="availability_date" ColumnName="availability_date" />
+                <ScalarProperty Name="resource_type_idresource_type" ColumnName="resource_type_idresource_type" />
+                <ScalarProperty Name="keycard_idkeycard" ColumnName="keycard_idkeycard" />
+                <ScalarProperty Name="user_iduser" ColumnName="user_iduser" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="resource_type">
+            <EntityTypeMapping TypeName="hotelModel.resource_type">
+              <MappingFragment StoreEntitySet="resource_type">
+                <ScalarProperty Name="idresource_type" ColumnName="idresource_type" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="qunatity" ColumnName="qunatity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="user">
+            <EntityTypeMapping TypeName="hotelModel.user">
+              <MappingFragment StoreEntitySet="user">
+                <ScalarProperty Name="iduser" ColumnName="iduser" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="user_type" ColumnName="user_type" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="activated_date" ColumnName="activated_date" />
+                <ScalarProperty Name="deactivated_date" ColumnName="deactivated_date" />
+                <ScalarProperty Name="confirmation_key" ColumnName="confirmation_key" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
